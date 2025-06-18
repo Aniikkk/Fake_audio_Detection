@@ -123,6 +123,10 @@ FINAL VERDICT: This audio is most likely FAKE (66.7% of the windows agreed)
 
 ---
 
+OR
+Run index.html
+go to localhost
+
 ## 📌 Notes
 
 - 📂 Models must be placed inside the `./models/` folder.
