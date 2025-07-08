@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string, send_from_directory
+from flask_cors import CORS
 import os
 import tempfile
 import threading
@@ -12,6 +13,7 @@ from main import (
 )
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Configure upload settings
 UPLOAD_FOLDER = tempfile.gettempdir()
@@ -30,6 +32,16 @@ streaming_sessions = {}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/')
+def index():
+    """Serve the main HTML page"""
+    try:
+        with open('index.html', 'r', encoding='utf-8') as f:
+            html_content = f.read()
+        return html_content
+    except FileNotFoundError:
+        return "Error: index.html not found", 404
 
 @app.route('/api/predict', methods=['POST'])
 def predict_audio():
